@@ -1,0 +1,42 @@
+class Solution {
+public:
+    /*
+    intution: Since here we have to find the pair whose sum is divisble by 60. So the property I am going to use here is : If we have two number n1 and n2 and we have r1 = n1 % x and r2 = n2 % x. So now if (r1+r2) % x ==0 then (n1+n2) % x == 0.
+1. Example1: We have 20 -> 2times and 40 -> 3times. Then the total pairs we can make whose sum is divisble by 60 are 6 (2 * 3).
+2. Example2: We have 80 -> 2times and 100 -> 3times. Then we can see this as 80%60 = 20 -> 2times and 100%60 = 40 -> 3times. Hence again total number of pairs is 6 (2 * 3).
+
+So now what we have to do is just find out the frequency for each time[i]%60 and then we just need to make pair of arr[i] & arr[60-i].
+
+Special Case: If time[i] % 60 == 0 || times[i] % 60 == 30
+
+In this case they do not need any other number to make pair. They can pair with themselves only.
+
+So if we have only one instance of them then pair is not possible. So 0 pairs.
+But if we have more than 0 then there will be pairs and we have to avoid duplicacy also. So lets we have 4times 30 or 4times 0, then total 6 pairs can be formed and in these cases calculation is done using (n * (n-1))/2.
+    */
+    int numPairsDivisibleBy60(vector<int>& time) {
+        vector<int> v(60,0);
+        int ans=0;
+        for (int i=0;i<time.size();i++)
+        {
+            v[time[i]%60]++;
+        }
+        
+        for (int i=0;i<=30;i++)
+        {
+            if (i==0 || i==30)
+            {
+                if (v[i]>1)
+                {
+                    ans+= v[i]*(v[i]-1)/2;
+                }
+            }
+            else if(v[i]!=0)
+            {
+                ans+= v[i]*v[60-i];
+            }
+        }
+        return ans;
+        
+    }
+};
