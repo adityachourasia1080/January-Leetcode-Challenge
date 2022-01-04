@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int bitwiseComplement(int n) {
+        string str;
+        for (int i=0;i<31;i++)
+        {
+            int a=1;
+            a=a<<i;
+            if ((a & n) ==a)
+            {
+                str.push_back('0');
+            }
+            else
+            {
+                str.push_back('1');
+            }
+        }
+        reverse(str.begin(),str.end());
+        int i=0;
+        while(str[i]=='1')
+        {
+            i++;
+        }
+        if (i==str.length()) return 1;
+        
+        int pow=1,ans=0;
+        string temp=str.substr(i,str.length()-i);
+        reverse(temp.begin(),temp.end());
+        i=0;
+        while(i<temp.length())
+        {
+            if (temp[i]=='1')
+            {
+                ans+=pow;
+            }
+            pow= pow*2;
+            i++;
+        }
+        return ans;
+        
+    }
+};
