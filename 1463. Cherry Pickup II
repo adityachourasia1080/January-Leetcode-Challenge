@@ -1,0 +1,53 @@
+/*SOl: In DP type of Problem always try to define the state 
+       here there will be three state : COL1 ie pos  of first robot
+	                                                    COL2  ie pos of second robot
+														row (for both robot this will be same as they are moving({i+1}) in rows place always
+														
+														
+		OK Now we have define our state so we know for sure that our dp array is 3D
+		Also we know for sure that if we are at i,j    we can move to  (i+1,j-1)(i+1,j)(i+1,j+1)
+		so for i,j   will be happing overlapping thus can store the value
+		SO now we are ready and the rest code would be self explanatory 
+		*/
+class Solution {
+   
+public:
+    int dp[75][75][75];
+    int rl,cl;
+    int hat(int c1,int c2,int r,vector<vector<int>>&grid)
+    {
+        if(r== rl)   return 0;
+        
+        if (dp[c1][c2][r]!=-1)  return dp[c1][c2][r];
+        
+        int ans=0;
+        for (int i=-1;i<=1;i++)
+        {
+            for (int j=-1;j<=1;j++)
+            {
+                int C1=c1+i;
+                int C2=c2+j;
+                if (C1>=0 && C1<cl && C2>=0 && C2<cl)
+                {
+                    ans=max(ans,hat(C1,C2,r+1,grid));
+                }
+            }
+        }
+        if (c1==c2)  ans+= grid[r][c1];
+        else if (c1!=c2)  ans+= grid[r][c1]+grid[r][c2];
+        return dp[c1][c2][r]=ans;
+    }
+    
+    int cherryPickup(vector<vector<int>>& grid) {
+        int n= grid.size();
+        int m= grid[0].size();
+        rl=n;
+        cl=m;
+        memset(dp,-1,sizeof(dp));
+        
+        return hat(0,m-1,0,grid);
+        
+        
+    }
+};
+/***PLZ UPVOKE** IF you find it useful as it motivate me */
