@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxDistToClosest(vector<int>& seats) {
+        vector<int> v;
+        for (int i=0;i<seats.size();i++)
+        {
+            if(seats[i]==1) v.push_back(i);
+        }   
+        int maxdis=0;
+        for (int i=1;i<v.size();i++)
+        {
+            int low= v[i-1];
+            int high=v[i];
+            
+            int mid= low +(high-low)/2;
+            int temp=min(mid-low,high-mid);
+            maxdis=max(maxdis,temp);
+        }
+        
+        if (seats[0]!=1)
+        {
+            maxdis=max(maxdis,v[0]);
+        }
+        if (seats[seats.size()-1]!=1)
+        {
+            if (seats.size()-v[v.size()-1]-1 > maxdis)  maxdis=seats.size()-v[v.size()-1]-1;
+        }
+        return maxdis;
+    }
+};
