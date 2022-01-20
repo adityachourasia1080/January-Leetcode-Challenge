@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int hat(vector<int> v,int mid)
+    {
+        int count=0;
+        for (int i=0;i<v.size();i++)
+        {
+            if (v[i]<=mid)   count++;
+            else
+            {
+                if ( (v[i] % mid) ==0)  count+= v[i]/mid;
+                else
+                {
+                    count+= (v[i]/mid)  +1;
+                }
+            }
+        }
+        return count;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        
+        int low= 1,high=INT32_MIN;
+        int n= piles.size();
+        for(int i=0;i<n;i++)
+        {
+            high=max(high,piles[i]);
+        }
+        
+        if (n==h)   return high;
+        int ans;
+        while(low<=high)
+        {
+            int mid= low+(high-low)/2;
+            int hours= hat(piles,mid);
+            
+            if(hours > h)
+            {
+                low= mid+1;
+            }
+            else 
+            {
+                ans= mid;
+                high= mid-1;
+            }
+        }
+        return ans;
+    }
+};
