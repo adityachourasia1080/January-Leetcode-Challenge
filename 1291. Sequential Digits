@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        queue<int> q;
+        for (int i=1;i<=9;i++)  q.push(i);
+        vector<int> ans;
+        while(!q.empty())
+        {
+             long long a= q.front(); q.pop();
+            if (a>high)  break;
+            int last= a%10;
+            if(last<9)
+            {
+                a= a*10+(last+1);
+                q.push(a);
+                if (a >=low && a<=high)  ans.push_back(a);
+            }
+        }
+        return ans;
+    }
+    
+};
