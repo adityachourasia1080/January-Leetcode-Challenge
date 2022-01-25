@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool validMountainArray(vector<int>& arr) {
+        bool incre=true,e1=false,e2=false;
+        if (arr.size()<3)   return false;
+        for (int i=1;i<arr.size();i++)
+        {
+            if (arr[i]==arr[i-1])  return false;
+            if (incre)
+            {
+               if (arr[i]<arr[i-1])  incre=false;
+                else e1=true;
+            }
+            if(incre==false)
+            {
+                if (arr[i]>arr[i-1])   return false;
+                else  e2=true;
+            }
+        }
+        return ( e1 && e2 ? true : false);
+    }
+};
