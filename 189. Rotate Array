@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void rotated(vector<int> & nums,int l,int h)
+    {
+       int i=l,j=h;
+        while(i<j)
+        {
+            swap(nums[i],nums[j]);
+            i++;
+            j--;
+        } 
+    }
+    void rotate(vector<int>& nums, int k) {
+        
+        int n= nums.size();
+        k= k%n;
+        rotated(nums,n-k,n-1);
+        rotated(nums,0,n-k-1);
+        reverse(nums.begin(),nums.end());
+        
+    }
+};
